@@ -13,8 +13,6 @@ services:
     volumes:
       # - .:/usr/src/node-app
       - ./testResults:/app/test-report.html
-    artifacts:
-      - ./testResults
 
     networks:
       - node-network
