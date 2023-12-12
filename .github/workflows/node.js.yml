@@ -49,7 +49,7 @@ jobs:
           pwd
           ls -R
 
-          docker cp node-app:/app/testResults/test-report.html ./testResults
+          docker cp "$CONTAINER_ID:/app/testResults/test-report.html" ./testResults
 
           ls -R
 
