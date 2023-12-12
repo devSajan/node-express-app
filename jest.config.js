@@ -3,6 +3,7 @@ module.exports = {
   testEnvironmentOptions: {
     NODE_ENV: 'test',
   },
+  testPathIgnorePatterns: ['/node_modules/'],
   testMatch: ['<rootDir>/tests/**/*.test.js'],
   restoreMocks: true,
   // coveragePathIgnorePatterns: ['node_modules', 'src/config', 'src/app.js', 'tests'],
