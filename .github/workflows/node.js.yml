@@ -76,8 +76,6 @@ jobs:
       #     file_path: ./testResults/test-report.html
       #     file_type: 'html'
 
-      - name: Remove test report
-        if: success() || failure()
-        run: |
-          ls -R
-          rm -rf ./testReport
+      - uses: geekyeggo/delete-artifact@v2
+        with:
+          name: test-results
