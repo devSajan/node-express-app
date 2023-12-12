@@ -34,6 +34,12 @@ jobs:
         run: |
           docker compose run node-app npm test
 
+      - name: create test report directory
+        run: |
+          pwd
+          ls
+          mkdir ./testResults
+
       - name: Clean up Docker containers
         if: success() || failure()
         run: |
