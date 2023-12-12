@@ -49,7 +49,7 @@ jobs:
           pwd
           ls -R
 
-          docker cp "$CONTAINER_ID:/app" ./testResults
+          docker cp node-app:/app/testResults/test-report.html ./testResults
 
           ls -R
 
@@ -59,7 +59,7 @@ jobs:
         if: success() || failure()
         uses: actions/upload-artifact@v3
         with:
-          name: testResults
+          name: test-results
           path: ./testResults
 
       # # https://afsalbacker.medium.com/a-simple-api-test-automation-setup-using-newman-github-actions-and-slack-f70cfa15efe3
