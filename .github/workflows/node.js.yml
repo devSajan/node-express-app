@@ -40,7 +40,9 @@ jobs:
           CONTAINER_ID=$(docker-compose ps -q node-app)
           echo "Container ID: $CONTAINER_ID"
 
-          docker cp "$CONTAINER_ID:/app/testResults" ./testResults
+          ls -R
+
+          docker cp "$CONTAINER_ID:/usr/src/node-app/testResults" ./testResults
 
           ls -R
 
