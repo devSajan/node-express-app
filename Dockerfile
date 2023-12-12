@@ -4,13 +4,14 @@ FROM node:alpine
 
 # WORKDIR /usr/src/node-app
 WORKDIR /app
-
 COPY package.json yarn.lock ./
 
 # USER node
 
 RUN yarn install --pure-lockfile
 # RUN npm install
+
+COPY . .
 
 # COPY --chown=node:node . .
 
