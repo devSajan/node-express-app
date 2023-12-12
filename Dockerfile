@@ -7,7 +7,7 @@ WORKDIR /app
 
 COPY package.json yarn.lock ./
 
-USER node
+# USER node
 
 # RUN yarn install --pure-lockfile
 RUN npm install
