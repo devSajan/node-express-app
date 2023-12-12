@@ -1,31 +1,74 @@
 # This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
 
-name: Node.js CI
+name: Run test suits
 
 on:
   push:
-    branches: [ "dev" ]
+    branches: ['dev']
   pull_request:
-    branches: [ "qa" ]
+    branches: ['qa']
+
+env:
+  BRANCH_NAME: dev
 
 jobs:
-  build:
-
+  run-integration-tests:
     runs-on: ubuntu-latest
-
     strategy:
       matrix:
-        node-version: [14.x, 16.x, 18.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+        node-version: [16.x]
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - run: npm ci
-    - run: npm run build --if-present
-    - run: npm test
+      - uses: actions/checkout@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Start all microservices in docker container along with mongodb, postgres, redis and kafka
+        run: |
+          echo "Running all the docker containers..."
+          docker compose up -d
+        continue-on-error: ${{ env.ACT && true || false }}
+
+      - name: Run test cases
+        run: |
+          docker compose run node-app npm test
+
+      - name: Clean up Docker containers
+        if: success() || failure()
+        run: |
+          CONTAINER_ID=$(docker-compose ps -q node-app)
+          echo "Container ID: $CONTAINER_ID"
+
+          docker cp "$CONTAINER_ID:/app/test-report.html" ./testReport
+
+          ls -R
+
+          docker compose down --rmi all -v
+
+      - name: Archive HTML Report
+        if: success() || failure()
+        uses: actions/upload-artifact@v3
+        with:
+          name: testResults
+          path: ./testResults
+
+      # # https://afsalbacker.medium.com/a-simple-api-test-automation-setup-using-newman-github-actions-and-slack-f70cfa15efe3
+      # - name: Publish jest test report to slack
+      #   if: success() || failure()
+      #   env:
+      #     SLACK_TOKEN: '${{ env.ACT && env.SLACK_TOKEN || secrets.SLACK_TOKEN }}'
+      #     SLACK_CHANNEL_ID: '${{  env.ACT && env.SLACK_CHANNEL_ID || secrets.SLACK_CHANNEL_ID }}'
+
+      #   uses: MeilCli/slack-upload-file@v3
+      #   with:
+      #     slack_token: ${{ env.SLACK_TOKEN }}
+      #     channel_id: ${{ env.SLACK_CHANNEL_ID }}
+      #     file_path: ./testResults/test-report.html
+      #     file_type: 'html'
+
+      - name: Remove test report
+        if: success() || failure()
+        run: |
+          ls -R
+          rm -rf ./testReport
