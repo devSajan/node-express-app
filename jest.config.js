@@ -3,10 +3,10 @@ module.exports = {
   testEnvironmentOptions: {
     NODE_ENV: 'test',
   },
-  testMatch: ['<rootDir>/tests/**/*.test.js'],
+  // testMatch: ['<rootDir>/tests/**/*.test.js'],
   restoreMocks: true,
-  coveragePathIgnorePatterns: ['node_modules', 'src/config', 'src/app.js', 'tests'],
-  coverageReporters: ['text', 'lcov', 'clover', 'html'],
+  // coveragePathIgnorePatterns: ['node_modules', 'src/config', 'src/app.js', 'tests'],
+  // coverageReporters: ['text', 'lcov', 'clover', 'html'],
   reporters: [
     'default',
     [
