@@ -3,7 +3,7 @@ version: '3'
 services:
   node-app:
     build: .
-      # image: node-app
+    # image: node-app
     environment:
       - MONGODB_URL=mongodb://mongodb:27017/node-boilerplate
     ports:
@@ -11,7 +11,7 @@ services:
     depends_on:
       - mongodb
     volumes:
-      # - .:/usr/app
+      # - .:/usr/src/node-app
       - ./testResults:/app/test-report
 
     networks:
