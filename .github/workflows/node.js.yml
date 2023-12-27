@@ -49,11 +49,11 @@ jobs:
           echo "Container ID: $CONTAINER_ID"
 
           pwd
-          ls -R
+          ls -R -I node_modules
           # docker exec $CONTAINER_ID ls -aR // this command will work only on running container
-          docker cp "$CONTAINER_ID:/app/testResults/test-report.html" ./testReport
+          docker cp "$CONTAINER_ID:/app/testResults" ./testReport
 
-          ls -R
+          ls -R -I node_modules
 
           docker compose down --rmi all -v
 

@@ -12,7 +12,7 @@ services:
       - mongodb
     volumes:
       # - .:/usr/src/node-app
-      - ./testResults:/app/test-report.html
+      - ./testResults:/app
 
     networks:
       - node-network
