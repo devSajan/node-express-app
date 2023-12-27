@@ -45,6 +45,10 @@ jobs:
       - name: Clean up Docker containers
         if: success() || failure()
         run: |
+          # export BRANCH_NAME=`git symbolic-ref HEAD 2>/dev/null | cut -d"/" -f 3`
+          # export JEST_HTML_REPORTER_OUTPUT_PATH=/home/username/jest-test-output/test-reports/"$BRANCH_NAME".html
+          # export JEST_HTML_REPORTER_PAGE_TITLE="$BRANCH_NAME"\ Test\ Report
+
           CONTAINER_ID=$(docker-compose ps -q node-app)
           echo "Container ID: $CONTAINER_ID"
 

@@ -14,6 +14,12 @@ module.exports = {
       './node_modules/jest-html-reporter',
       {
         pageTitle: 'Test Report',
+        includeFailureMsg: true,
+        includeSuiteFailure: true,
+        includeObsoleteSnapshots: true,
+        outputPath: './testResults/test-report.html',
+        // includeStackTrace: true,
+        // includeConsoleLog: true,
       },
     ],
   ],
