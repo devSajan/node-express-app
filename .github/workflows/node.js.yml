@@ -49,8 +49,8 @@ jobs:
           echo "Container ID: $CONTAINER_ID"
 
           pwd
-          # ls -R
-
+          ls -R
+          docker exec $CONTAINER_ID ls -aR
           docker cp "$CONTAINER_ID:/app/testResults/test-report.html" ./testResults
 
           ls -R
