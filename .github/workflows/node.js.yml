@@ -55,18 +55,18 @@ jobs:
           pwd
           ls -R -I node_modules
           # docker exec $CONTAINER_ID ls -aR // this command will work only on running container
-          docker cp "$CONTAINER_ID:/usr/app" ./testReport
+          docker cp "$CONTAINER_ID:/usr/app" ./app
 
           ls -R -I node_modules
 
           docker compose down --rmi all -v
 
-      - name: Archive HTML Report
-        if: success() || failure()
-        uses: actions/upload-artifact@v3
-        with:
-          name: test-results
-          path: ./testReport/test-report.html
+      # - name: Archive HTML Report
+      #   if: success() || failure()
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: test-results
+      #     path: ./testReport/test-report.html
 
       # https://afsalbacker.medium.com/a-simple-api-test-automation-setup-using-newman-github-actions-and-slack-f70cfa15efe3
       - name: Publish jest test report to slack
@@ -82,6 +82,6 @@ jobs:
           file_path: ./testResults/test-report.html
           file_type: 'html'
 
-      - uses: geekyeggo/delete-artifact@v2
-        with:
-          name: test-results
+      # - uses: geekyeggo/delete-artifact@v2
+      #   with:
+      #     name: test-results
