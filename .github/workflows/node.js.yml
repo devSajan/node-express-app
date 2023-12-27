@@ -55,11 +55,14 @@ jobs:
           pwd
           ls -R -I node_modules
           # docker exec $CONTAINER_ID ls -aR // this command will work only on running container
-          docker cp "$CONTAINER_ID:/usr/app" ./app
+          docker cp "$CONTAINER_ID:/testResults/test-report" ./testReport
 
           ls -R -I node_modules
 
           docker compose down --rmi all -v
+
+      - name: Create ZIP file
+        run: zip -r test-report.zip testReport # Replace with your file/directory
 
       # - name: Archive HTML Report
       #   if: success() || failure()
@@ -79,8 +82,8 @@ jobs:
         with:
           slack_token: ${{ env.SLACK_TOKEN }}
           channel_id: ${{ env.SLACK_CHANNEL_ID }}
-          file_path: ./testResults/test-report.html
-          file_type: 'html'
+          file_path: ./test-report.zip
+          file_type: 'zip'
 
       # - uses: geekyeggo/delete-artifact@v2
       #   with:

@@ -10,4 +10,4 @@ yarn-error.log
 
 # Code coverage
 coverage
-test-report.html
+/test-report
