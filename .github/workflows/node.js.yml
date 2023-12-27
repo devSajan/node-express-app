@@ -50,8 +50,8 @@ jobs:
 
           pwd
           ls -R
-          docker exec $CONTAINER_ID ls -aR
-          docker cp "$CONTAINER_ID:/app/testResults/test-report.html" ./testResults
+          # docker exec $CONTAINER_ID ls -aR // this command will work only on running container
+          docker cp "$CONTAINER_ID:/app/testResults/test-report.html" ./testReport
 
           ls -R
 
@@ -62,7 +62,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: test-results
-          path: ./testResults
+          path: ./testReport/test-report.html
 
       # https://afsalbacker.medium.com/a-simple-api-test-automation-setup-using-newman-github-actions-and-slack-f70cfa15efe3
       - name: Publish jest test report to slack
